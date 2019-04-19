@@ -17,8 +17,8 @@
   "license": "ISC",
   "homepage": "https://github.com/joeynimu/graphql-user-api#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.4.3",
     "@octokit/rest": "^16.23.2",
-    "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
@@ -28,6 +28,8 @@
     "node-fetch": "^2.1.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3"
   }
 }

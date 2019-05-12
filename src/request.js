@@ -1,19 +1,35 @@
-import Octokit from '@octokit/rest';
+const Octokit = require('@octokit/rest')
+  .plugin(require('@octokit/plugin-throttling'));
+import {GITHUB_TOKEN} from './constants';
 
-export const octokit = new Octokit();
+export const octokit = new Octokit({
+  auth: GITHUB_TOKEN,
+  throttle: {
+    onRateLimit: (retryAfter, options) => {
+      octokit.log.warn(`Request quota exhausted for request ${options.method} ${options.url}`);
 
-export const fetchMember= (login) => {
-  return octokit.orgs.listMembers({org: login, filter: "all", role: "all", per_page: 10, page: 1}).then((result) => result.data);
+      if (options.request.retryCount === 0) { // only retries once
+        console.log(`Retrying after ${retryAfter} seconds!`);
+        return true
+      }
+    },
+    onAbuseLimit: (retryAfter, options) => {
+      // does not retry, only logs a warning
+      octokit.log.warn(`Abuse detected for request ${options.method} ${options.url}`)
+    }
+  }});
+
+export const fetchMember= async (login) => {
+  return await octokit.paginate(octokit.orgs.listMembers.endpoint({org: login}));
 };
 
 
-export const fetchMemberRepositories= (member) => {
-
-  return octokit.repos.listForUser({username: member, type: 'owner', per_page: 10, page: 1}).then((result)=>result.data);
+export const fetchMemberRepositories= async (member) => {
+  return await octokit.paginate(octokit.repos.listForUser.endpoint({username: member}));
 };
 
-export const fetchOrganizationRepositories= (org) => {
-  return octokit.repos.listForOrg({org: org, per_page: 10, page:1}).then((result) => result.data);
+export const fetchOrganizationRepositories= async (org) => {
+  return await octokit.paginate(octokit.repos.listForOrg.endpoint({org}));
 };
 
 

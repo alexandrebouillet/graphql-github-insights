@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec babel-node --presets babel-preset-env -- src/server.js",
+    "dev": "nodemon --exec babel-node -- src/server.js",
     "build": "babel src --out-dir dist",
     "start": "node dist/server.js"
   },
@@ -17,19 +17,22 @@
   "license": "ISC",
   "homepage": "https://github.com/joeynimu/graphql-user-api#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
-    "@octokit/rest": "^16.23.2",
-    "body-parser": "^1.18.3",
+    "@babel/polyfill": "^7.4.4",
+    "@octokit/plugin-throttling": "^2.5.0",
+    "@octokit/rest": "^16.25.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
+    "dotenv": "^8.0.0",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
     "graphql": "^0.13.2",
-    "node-fetch": "^2.1.2"
+    "node-fetch": "^2.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3"
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4"
   }
 }

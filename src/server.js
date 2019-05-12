@@ -3,7 +3,7 @@ import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import {APP_PORT} from './constants';
+import {APP_PORT, GITHUB_TOKEN} from './constants';
 import schema from './schema';
 import DataLoader from 'dataloader';
 import {
@@ -63,9 +63,9 @@ app.use(graphqlHTTP(req => {
   };
 
 }));
-
 try {
-  app.listen(APP_PORT, () => console.log(`GraphQL server running at http://localhost:${APP_PORT}`));
+  if(!GITHUB_TOKEN) throw new Error("please set the GITHUB_TOKEN in .env file");
+  app.listen(APP_PORT, () => console.log(`GraphQL server running at http://localhost:${APP_PORT} using this token ${GITHUB_TOKEN}`));
 } catch (error) {
   console.log(`Something went wrong ${error}`);
 }

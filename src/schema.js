@@ -4,7 +4,6 @@ import {
   GraphQLList,
   GraphQLSchema
 } from 'graphql';
-import {fetchOrganization} from './request';
 
 const OrganizationType = new GraphQLObjectType({
   name: 'Organization',
